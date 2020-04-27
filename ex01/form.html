@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멤버십 가입</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <h1>멤버십</h1>
+    <form method="POST" action="register" >
+        <!-- method : 전송 방식 GET or POST -->
+        <legend> 멤버십 가입</legend>
+        <input type="password" name="pass" id ="passwd"> <br/>
+        <label> 성별</label>
+        <input type = "radio" name="gender" value="M">남성
+        <input type = "radio" name="gender" value="F">여성
+        
+
+        
+
+        <br/>
+        <label>선호음료</label>
+        <input type = "checkbox" name="favorite" value="am">아메리카노
+        <input type = "checkbox" name="favorite" value="lat">라떼
+        <input type = "checkbox" name="favorite" value="tea">차
+        <input type = "checkbox" name="favorite" value="ade">에이드
+        <input type = "checkbox" name="favorite" value="lat">라떼
+        <!-- check box는 중복 선택, 서버의 입장에서는 문자열의 배열로..  -->
+        <br/>
+
+        <label>통신사</label>
+        <select name="telecom">
+            <option value="S">SKT</option>
+            <option value="L">LGU+</option>
+            <option value="K">KT</option>
+            <option value="E">기타</option>
+        </select><br/>
+
+        <input type="submit" value="멤버십 가입">
+        <input type="reset" value="다시 작성">
+
+    </form>
+    메인페이지로 이동 : <a href="./index.html">메인 페이지</a>
+   
+    
+</body>
+</html>
+<!DOCTYPE html>

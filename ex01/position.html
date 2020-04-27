@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Example</title>
+    <style>
+        .container{
+            border:2px solid;
+            height: 100px;
+            margin-top: 50px;
+            position: relative;
+            overflow: scroll;
+
+        }
+        .box{
+            width: 100px;
+            height:100px;
+            position: absolute;
+
+        }
+
+        .box:first-child{
+            background-color: red;
+            left: 10px;
+            top:10px;
+        }
+
+        .box:nth-child(2){
+            background-color: green;
+            left: 50px;
+            top:50px;
+            z-index: 10;
+        }
+
+        
+        .box:nth-child(3){
+            background-color: blue;
+            left: 90px;
+            top: 90px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+
+    </div>
+</body>
+</html>

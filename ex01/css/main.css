@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/* 공통 css */
+
+/* 전체 선택자: */
+*{
+    margin:  0;
+    padding: 0;
+    color:black;
+    
+}
+
+p{
+    font-size: 16px;
+    font-family: serif;
+}
+
+h1{
+    font-size: 200%;
+    
+}
+
+h2{
+    font-size:  1.5em;
+    
+    font-family: serif;
+}

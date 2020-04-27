@@ -1,0 +1,101 @@
+@charset "UTF-8";
+@import "main.css";
+
+h1 {
+    color: yellow;
+    background-color: black;
+    
+
+}
+
+
+/* 클래스 선택자 */
+.beverage{
+    border: 3px dashed gray;
+    padding: 10px;
+
+}
+
+/* id 선택자 */
+#blue{
+    background-color: aquamarine;
+
+}
+
+#green{
+    background-color: rgba(0,127,0,0.5)
+
+}
+
+#red{
+    background-color: indianred;
+
+}
+#purple{
+    background-color: plum;
+
+}
+
+[type]{
+    background-color: beige;
+
+}
+[type="text"]
+{
+    background-color: chartreuse;
+}
+[type="password"]
+{
+    background-color: lightblue;
+
+}
+
+input:focus{
+    background-color: white;
+}
+
+#menu > li {
+    
+}
+
+#menu > li:first-child{
+    
+    background-color: violet;
+}
+
+#menu > li:last-child{
+    background-color: red;
+}
+
+#menu > li:nth-child(2n){
+    background-color: gold;
+}
+
+/* 박스 모델 */
+section.beverage{
+    /* 
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px; 
+    */
+    width: 90%;
+    margin:10px auto;
+}
+
+section.beverage img
+{
+    /* border-top-left-radius: 10px; */
+    border-radius: 10%;
+
+    /* -->공간 점유 하지 않음.  */
+    /* display: none; */  
+
+    /* -->공간은 점유 하되, 표시하지 않음 */
+    /* visibility: hidden;  */
+}
+
+/* body{
+    background-image: url("../images/Landscape.jpg");
+ 
+} */
