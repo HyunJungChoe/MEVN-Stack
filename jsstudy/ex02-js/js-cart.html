@@ -8,6 +8,53 @@
                 height: 30px;
             }
         </style>
+    <script>
+        //  삭제 버튼의 콜백
+        function delItem(event) {
+            var obj = event.target; // 이벤트 발생 객체
+            var removeItem = obj.parentNode.parentNode;
+            var parent = document.getElementById("list"); // ul#list
+            parent.removeChild(removeItem);
+        }
+
+        //  #btn-add의 click 이벤트 콜백
+        function addItem(event) {
+            //  #item 입력상자의 값으로 li 태그 생성
+            var item = document.getElementById("item").value.trim();
+            if (item.length > 0) {
+                //  등록
+                //  부모 찾기
+                var parent = document.getElementById("list"); // ul#list
+                //  새 노드 생성
+                var child = document.createElement("li"); // 고아 노드
+                child.innerText = item;
+                //  toolbar를 자식으로 등록
+                var toolbar = document.createElement("div");
+                toolbar.style.display = "inline";
+                var delBtn = document.createElement("button");
+                delBtn.innerText = "삭제";
+                delBtn.style.cssFloat = "right";
+                delBtn.addEventListener("click", delItem);
+
+                toolbar.appendChild(delBtn);
+                child.appendChild(toolbar);
+
+                //  부모에게 등록
+                parent.appendChild(child);
+                //  원래 입력 내용을 지우고, 입력 대기
+                document.getElementById("item").value = "";
+                document.getElementById("item").focus();
+            }
+        }
+
+        window.addEventListener("load", function(event) {
+            //  초기화 코드
+            //  #btn-add 버튼에 click 이벤트 등록
+            document.getElementById("btn-add")
+                .addEventListener("click", addItem);
+        });
+
+    </script>
     </head>
     <body>
         <div id="header">

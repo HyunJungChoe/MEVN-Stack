@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Test</title>
+    <style>
+        .poster {
+            width: 100px;
+        }
+    </style>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <button id="btnCallHtml">HTML 조각 불러오기</button>
+    <button id="btnCallJson">JSON 데이터 불러오기</button>
+
+    <div id="info">
+        <!-- btnCallHtml을 누르면 코드 조각을 서버에서 불러와서
+        이곳에 반영-->
+    </div>
+
+    <table id="list" border="1" width="640">
+        <!-- btnCallJson을 누르면 JSON 데이터 불러와서
+        테이블에 동적으로 적용-->
+    </table>
+</body>
+<script>
+    $(document).ready(function(event) {
+        $("#btnCallHtml").on("click", function(event) {
+            //  HTML 조각 받아오기
+            //  snippet.html을 비동기로 호출
+            $.ajax({
+               url: "snippet.html", //  요청할 주소
+               type: "GET",     // 요청 방식
+               dataType: "text",    //  전달 받을 데이터의 형식 
+               success: function(response) {
+                   //   요청 성공시 콜백
+                   console.log("응답:", response);
+                   $("#info").html(response);
+               },
+               error: function(request, status, error) {
+                   //   요청 실패시 콜백
+                   console.error("ERROR:", error);
+                   console.error("에러 요청 정보:", request);
+                   console.error("STATUS:", status);
+               }
+            });
+        });
+        $("#btnCallJson").on("click", function(event) {
+            //  JSON 데이터 받아와 table에 반영
+            $.ajax({
+                url: "http://localhost:3000/movies",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    // console.log("응답:", result);
+                    //  응답이 JSON 포맷일 경우,
+                    //  JavaScript에서는 별도의 컨버팅이 필요 없음
+                    $("#list").html("");
+                    var movies = result.movies; // Array
+                    for (var i = 0; i < movies.length; i++) {
+                        var movie = movies[i];
+                        // console.log("영화 정보:", movie);
+                        // 동적 페이지의 생성
+                        var title = movie.title;
+                        var director = movie.director;
+                        var movieId = movie.id;
+                        var image = "http://localhost:3000/images/" + movie.image;
+
+                        //  tr 생성
+                        var tr = $("<tr>");
+                        var htmlString = `
+                        <td>
+                            <img class="poster" src="${image}">
+                        </td>
+                        <td>${title}</td>
+                        <td>${director}</td>
+                        `;
+                        tr.html(htmlString);
+
+                        $("#list").append(tr);
+                    }
+                },
+                error: function(request, status, error) {
+                    console.error(status, error);
+                }
+            })
+        });
+    });
+</script>
+</html>

@@ -27,6 +27,8 @@
             height: 100px;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -62,65 +64,112 @@
     </div>
 </body>
 <script>
-    /*
+    
     (function testAttribute() {
         //  img#main-image -> 속성 확인
-        var obj = document.getElementById("main-image");
+        // var obj = document.getElementById("main-image");
+        var obj = $("#main-image");
+
         console.log("#main-image:", obj);
+
         //  객체가 가지고 있는 모든 속성들을 확인
-        console.log("Attrs:", obj.getAttributeNames());
+        // console.log("Attrs:", obj.getAttributeNames());
+
         //  속성의 확인(title)
-        console.log("title of obj:", obj.getAttribute("title"));
+        // console.log("title of obj:", obj.getAttribute("title"));
+        console.log("title of obj:", obj.attr("title"));
+
+
         //  속성의 변경
-        obj.setAttribute("title", "사진:" + obj.getAttribute("title"));
-        console.log("변경된 title:", obj.getAttribute("title"));
+        // obj.setAttribute("title", "사진:" + obj.getAttribute("title"));
+        obj.attr("title", obj.attr("title"));
+
+        console.log("변경된 title:", obj.attr("title"));
 
         // 하단의 .sub-image의 title 속성의 변경
-        var subs = document.getElementsByClassName("sub-image");
+        // var subs = document.getElementsByClassName("sub-image");
+        var subs = $(".sub-image"); 
         //  -> HTMLCollection: 직접 접근 불가, 인덱스 접근 필요
         console.log(".sub-image:", subs);
 
         for(var i = 0; i < subs.length; i++) {
-            var sub = subs[i]; // HTMLElement -> 직접 접근 가능
-            sub.setAttribute("title", "사진:" + sub.getAttribute("title"));
+            var sub = $(subs[i]); // HTMLElement -> jQuery Wrapping
+            sub.attr("title", "사진: " + sub.attr("title"));
         }
-    })(); */
+    })(); 
+
     //  load 이벤트 : 페이지가 모두 로드 되었을 때 발생
     //      -> 페이지 내의 초기화 코드를 담당
-    window.addEventListener("load", function(event) {
+     window.addEventListener("load", function(event) {
+        $(document).ready(function(event){
+
+        });
+
         console.log("event:", event);
         //  하단 .sub-image를 클릭
         //      상단의 #main-image로 정보를 이동
-        var products = document.getElementsByClassName("sub-image");
-        // console.log(".sub-image:", products);
-        for (var i = 0; i < products.length; i++) {
-            var product = products[i];
-            product.addEventListener("click", function(event) {
-                var obj = event.target; //  중요: 이벤트를 발생시킨 객체
-                //  속성들을 #main-image로 전달
-                var mainImage = document.getElementById("main-image");
-                // console.log(mainImage);
-                mainImage.setAttribute("src", obj.getAttribute("src"));
-                mainImage.setAttribute("title", obj.getAttribute("title"));
+        // var products = document.getElementsByClassName("sub-image");
+        var products = $(".sub-image");
 
-                //  제품명을 변경
-                //  아이디가 product-info인 요소의 자식인 h2
-                var title = document.querySelector("#product-info > h2");
-                //  내부 콘텐트의 변경 : .innerHTML, innerText
-                title.innerText = obj.getAttribute("title");
+        // console.log(".sub-image:", products);
+        // for (var i = 0; i < products.length; i++) {
+        //     var product = products[i];
+        //     product.addEventListener("click", function(event) {
+        //         var obj = event.target; //  중요: 이벤트를 발생시킨 객체
+        //         //  속성들을 #main-image로 전달
+        //         var mainImage = document.getElementById("main-image");
+        //         // console.log(mainImage);
+        //         mainImage.setAttribute("src", obj.getAttribute("src"));
+        //         mainImage.setAttribute("title", obj.getAttribute("title"));
+
+        //         //  제품명을 변경
+        //         //  아이디가 product-info인 요소의 자식인 h2
+        //         var title = document.querySelector("#product-info > h2");
+        //         //  내부 콘텐트의 변경 : .innerHTML, innerText
+        //         title.innerText = obj.getAttribute("title");
+        //     });
+        // }
+
+        // 검색된 객체가 단일 객체, 집합 객체 여부에 상관 없이 모든 검색된 객체에 동일한 메서드를 일괄 적용할 수 있다.
+        
+        for (var i = 0; i < products.length; i++) {
+            products.on("click", function(event){
+            var obj = $(event.target); // 이벤트 발생 객체 wrapping
+            console.log(obj);
+            var mainImage  =$("#main-image");
+            mainImage.attr({
+                src: obj.attr("src"),
+                title: obj.attr("title")
             });
+            var title =$("#product-info > h2");
+            title.text(obj.attr("title"));
+
+        });
         }
+        
 
         //  하단 검색어 입력창에 key 이벤트 등록
-        document.getElementById("keyword")
+        // document.getElementById("keyword")
             //  키보드를 눌렀다가 손을 뗄 때
-            .addEventListener("keyup", function(event) {
-                console.log(event);
-                console.log("눌러진 키:", event.keyCode);
+            // .addEventListener("keyup", function(event) {
+            //     console.log(event);
+            //     console.log("눌러진 키:", event.keyCode);
 
-                var btn = document.getElementById("btn-search");
-                btn.innerText = event.target.value + " 검색";
-            });
+            $("#keyword").on("keyup", function(event){
+            console.log(event);
+            sessionStorage.log("눌러진 키:", event.keyCode);
+
+            var btn = $("btn-search");
+            btn.text($(event.target).val()); 
+        
+        });
+
+
+            //     var btn = document.getElementById("btn-search");
+            //     btn.innerText = event.target.value + " 검색";
+            // });
+
+
     });
     //  TODO: jQuery 버전으로 다시 만들기
 </script>
