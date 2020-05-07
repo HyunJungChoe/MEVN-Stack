@@ -1,6 +1,10 @@
 //  Express, http 모듈을 불러오기
 const express = require("express");
 const http = require("http");
+const bodyParser = require("body-parser");
+const MongoClient = require("mongodb").MongoClient;
+const webRouter = require("./router/web");
+const apiRouter = require("./router/api");
 
 //  Express 객체 생성
 const app = express();
@@ -8,15 +12,18 @@ const app = express();
 app.set("port", 3000);
 //  정적 파일 처리를 위한 미들웨어 추가
 app.use(express.static(__dirname + "/public"));
-
+app.use(bodyParser.urlencoded( {extended: false}));
 
 // view Engine 을 ejs로 설정 
 //npm install ejs --save
 app.set("view engine", "ejs");
-app.set("views",__dirname + "/views");
+app.set("views", __dirname + "/views");
 
+//---- USE
+app.use("/web",webRouter(app));
+app.use("/api",apiRouter(app));
 
-//  요청 처리 : get, post
+//----  요청 처리 : get, post
 app.get("/", (req, resp) => {
     console.log("[GET] /");
     //  응답 출력
@@ -67,4 +74,25 @@ app.get("/render",(req,resp)=>{
 
 });
 
-startExpress();
+function startServer(){
+    const dburl = "mongodb://localhost/21017";
+    // DB에 연결 ㄱㄱ!
+    MongoClient.connect(dburl,
+        {useNewUrlParser: true},
+        (err,client)=>{
+            if(!err){// DB 접속 성공시 콜백 함수.            
+            db = client.db("mydb");
+            console.log("데이터 베이스 연결 성공");
+            // DB 정보를 app에 등록
+            app.set("db",db);
+            //Express 시작!
+            startExpress();
+            }
+            else{
+                console.error("데이터 베이스 연결 실패");
+            }
+        });
+}
+
+//startExpress();
+startServer();
